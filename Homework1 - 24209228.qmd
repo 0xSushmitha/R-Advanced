@@ -1,0 +1,103 @@
+---
+title: "Adv R - HW1"
+author: "Sushmitha - 24209228"
+geometry: "left=2cm,right=2cm,top=2cm,bottom=2cm"
+format:
+  pdf:
+    include-in-header:
+      text: |
+        \usepackage{xcolor}
+editor: visual
+---
+
+# 1. Introduction
+
+The **Titanic dataset** is a widely used dataset in data analysis and machine learning, originally derived from the tragic sinking of the \textcolor{orange}{RMS Titanic in April 1912}. It captures detailed information on the fate of the passengers aboard the ship, summarizing their survival outcomes based on ***economic status (passenger class), sex, age group, and survival status***.
+
+In its original format in R, the Titanic dataset is accessed using Titanic (capital T), and is structured as a contingency table object of class table. To facilitate data analysis and visualization, it is common practice to convert this table into a *data frame*, where each row corresponds to a unique combination of the four variables, with an additional column Freq indicating the number of passengers in that group.
+
+\underline{Key Variables:}
+
+-   **Class:** Indicates the socio-economic status of the passenger (1st, 2nd, 3rd, or Crew).
+-   **Sex:** Gender of the passenger (Male or Female).
+-   **Age:** Age group of the passenger (Child or Adult).
+-   **Survived:** Survival outcome (Yes or No).
+-   **Freq:** Frequency count for each combination of the above variables.
+
+::: {.callout-note title="Note"}
+\textcolor{blue}{In this document, the margins have been reduced, headings and sections have been included, color highlighting has been applied, and various formatting aesthetics have been incorporated to enhance formality and presentation.}
+:::
+
+This analysis presents a **bar chart** to explore the relationship between passenger class, sex, and survival outcome.
+
+# 2. Dataset Manipulation
+
+## 1. Load data and get summary
+
+We use the `Titanic` dataset built into R. It is originally stored as a \textcolor{red}{4-dimensional table}, so we convert it into a data frame for plotting. Then basic summary of the data set has been displayed to get some insights from the variables.
+
+```{r}
+#| label: Load, prepare and get summary of Data
+#| echo: false
+#| warning: false
+library(ggplot2)
+library(dplyr)
+
+# Convert the Titanic table to a data frame
+titanic_df <- as.data.frame(Titanic)
+
+# Show summary of data
+summary(titanic_df)
+```
+
+\underline{Analytical Summary:}
+
+-   **Passenger Class**: The dataset is balanced across all four classes (***1st, 2nd, 3rd, Crew***) with **8 records each**, indicating an equal representation of each category.
+-   **Sex:** There is an equal split between ***males and females*** across all classes (**16 records each**).
+-   **Age:** Both children and adults are represented equally (16 records each), providing a \underline{good mix for analysis}.
+-   **Survival:** Each class has an equal number of survival/no survival records initially (16 each), but the frequency (Freq) column captures the actual number of people represented by each record, varying widely from **0 to 670**.
+-   **Frequency:** The frequency distribution of survival ranges from 0 to 670, with a mean of about **68.78**, showing significant variability in the number of passengers represented by each observation.
+
+## 3. Data plotting and interpretation
+
+A bar chart has been created to illustrate the survival outcomes of passengers in the Titanic dataset. Counts are separated based on ***gender, with survival status (Yes or No) indicated by distinct colors within each gender category***. The bars have been grouped according to *passenger class (1st, 2nd, 3rd, and Crew)* to emphasize the influence of class and gender on survival rates.
+
+```{r}
+#| label: Data plotting
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Bar plot representing the survival count by class and sex"
+# Create a bar plot of survival count by class and sex
+ggplot(titanic_df, aes(x = Class, y = Freq, fill = Survived)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~ Sex) +
+  labs(
+    title = "Titanic Survival by Class and Sex",
+    x = "Passenger Class",
+    y = "Number of People"
+  ) +
+  theme_minimal() +
+  scale_fill_manual(values = c("No" = "red", "Yes" = "green"))
+```
+
+\underline{Plot Interpretation:}
+
+This plot shows that survival was more likely for passengers in **higher classes, and females** had higher survival rates across all classes. The lowest survival counts were among **third-class males**.
+
+-   **First-Class Passengers:** Had higher survival rates, especially females, where survival numbers were significantly higher than fatalities.
+
+-   **Second-Class Passengers:** Also show better survival odds, particularly for women.
+
+-   **Third-Class Passengers:** Had the lowest survival rates, especially third-class males, who had the highest number of deaths.
+
+-   **Crew Members:** Male crew had low survival; female crew had higher survival rates, but the total number was small.
+
+    This visualization makes it clear that survival on the Titanic was influenced by both **class and sex**, with ***females and upper-class passengers*** more likely to survive.
+
+# 3. Conclusion
+
+This analysis of the Titanic dataset revealed clear patterns of survival based on \textcolor{brown}{passenger class and gender}. Passengers in **higher classes, especially females, had better survival outcomes than those in lower classes and males**. These findings underscore the influence of socio-economic status and gender during the disaster.
+
+*The exercise demonstrates the value of data visualization and summary statistics in uncovering meaningful insights from real-world data*.
+
+------------------------------------------------------------------------
