@@ -101,3 +101,5 @@ This analysis of the Titanic dataset revealed clear patterns of survival based o
 *The exercise demonstrates the value of data visualization and summary statistics in uncovering meaningful insights from real-world data*.
 
 ------------------------------------------------------------------------
+
+Edit 1: For 1st commit in github repo
